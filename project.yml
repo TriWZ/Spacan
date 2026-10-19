@@ -1,0 +1,40 @@
+# XcodeGen spec — run `xcodegen generate` in this folder to produce SiteScan.xcodeproj
+# (brew install xcodegen). See README.md for the manual alternative.
+name: SiteScan
+options:
+  bundleIdPrefix: com.triphorium
+  deploymentTarget:
+    iOS: "17.0"
+  createIntermediateGroups: true
+
+targets:
+  SiteScan:
+    type: application
+    platform: iOS
+    sources:
+      - path: SiteScan
+    info:
+      path: SiteScan/Info.plist
+      properties:
+        CFBundleDisplayName: SiteScan
+        CFBundleShortVersionString: "0.1.0"
+        CFBundleVersion: "1"
+        NSCameraUsageDescription: SiteScan 需要使用相机和 LiDAR 进行三维扫描。
+        UIRequiredDeviceCapabilities: [arkit, arm64]
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        UIRequiresFullScreen: true
+        UILaunchScreen: {}
+        UIFileSharingEnabled: true
+        LSSupportsOpeningDocumentsInPlace: true
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.triphorium.sitescan
+        SWIFT_VERSION: "5.0"
+        TARGETED_DEVICE_FAMILY: "1,2"
+        CODE_SIGN_STYLE: Automatic
+        # Put your Apple Developer Team ID here, or pick it in Xcode → Signing & Capabilities.
+        DEVELOPMENT_TEAM: ""
+        ENABLE_PREVIEWS: true
+        SWIFT_STRICT_CONCURRENCY: minimal
