@@ -23,7 +23,7 @@ enum MeshExporter {
         var stats = Stats()
         stats.anchors = anchors.count
 
-        try handle.write(contentsOf: Data("# SiteScan mesh export — ARKit LiDAR scene reconstruction\n# units: meters, right-handed, +Y up (ARKit world), origin = recording start\n".utf8))
+        try handle.write(contentsOf: Data("# Spacan mesh export — ARKit LiDAR scene reconstruction\n# units: meters, right-handed, +Y up (ARKit world), origin = recording start\n".utf8))
 
         var indexOffset = 0
         for (i, anchor) in anchors.enumerated() {

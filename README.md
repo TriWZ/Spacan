@@ -1,4 +1,4 @@
-# SiteScan — iPhone LiDAR 三维扫描（as-built 进度验证的第一步）
+# Spacan — iPhone LiDAR 三维扫描（as-built 进度验证的第一步）
 
 用 iPhone Pro / iPad Pro 的 LiDAR 走一圈，得到三样东西，全部**米制、同一坐标系**：
 
@@ -20,14 +20,14 @@
 
 ## 1.5 没有 Mac 的做法（Windows + iPhone）
 
-iOS 包只能在 macOS 上编译，但 GitHub Actions 免费提供 macOS 机器。仓库里的 `.github/workflows/build-ipa.yml` 会在云端编译出一个**未签名** `SiteScan-unsigned.ipa`，然后在 Windows 上用 Sideloadly 用你自己的 Apple ID 签名并装到手机。全程不需要 Mac，不需要付费开发者账号。
+iOS 包只能在 macOS 上编译，但 GitHub Actions 免费提供 macOS 机器。仓库里的 `.github/workflows/build-ipa.yml` 会在云端编译出一个**未签名** `Spacan-unsigned.ipa`，然后在 Windows 上用 Sideloadly 用你自己的 Apple ID 签名并装到手机。全程不需要 Mac，不需要付费开发者账号。
 
 **第一步：把代码放到 GitHub（一次性，10 分钟）**
 
-1. 注册/登录 [github.com](https://github.com) → 右上角 + → New repository → 名字 `sitescan`，选 **Public**（Actions 的 macOS 机器对公开仓库免费不限时；私有仓库每月只有约 200 分钟，够 20 次编译）→ Create
-2. 页面上点 *uploading an existing file* → 把解压后 `SiteScan/` 文件夹里的**所有内容**（包括 `.github` 文件夹，Windows 资源管理器里要勾选「查看 → 隐藏的项目」才看得见）拖进浏览器 → Commit changes
+1. 注册/登录 [github.com](https://github.com) → 右上角 + → New repository → 名字 `spacan`，选 **Public**（Actions 的 macOS 机器对公开仓库免费不限时；私有仓库每月只有约 200 分钟，够 20 次编译）→ Create
+2. 页面上点 *uploading an existing file* → 把解压后 `Spacan/` 文件夹里的**所有内容**（包括 `.github` 文件夹，Windows 资源管理器里要勾选「查看 → 隐藏的项目」才看得见）拖进浏览器 → Commit changes
 3. 仓库顶部 **Actions** 标签 → 左侧 *Build unsigned IPA* → 右侧 *Run workflow*。约 6–10 分钟后变绿
-4. 点进这次运行 → 底部 *Artifacts* → 下载 `SiteScan-unsigned-ipa`（一个 zip，里面是 `.ipa`）
+4. 点进这次运行 → 底部 *Artifacts* → 下载 `Spacan-unsigned-ipa`（一个 zip，里面是 `.ipa`）
 
 以后每次改代码只重复 2–4 步；或者在 Windows 装 [GitHub Desktop](https://desktop.github.com) 用 push 代替拖文件。
 
@@ -38,7 +38,7 @@ iOS 包只能在 macOS 上编译，但 GitHub Actions 免费提供 macOS 机器�
 3. iPhone 用数据线连电脑，解锁，点「信任此电脑」
 4. 打开 Sideloadly：把 `.ipa` 拖进去 → 填你的 Apple ID → Start → 弹窗输入密码（和双重认证码）→ 等它签名安装
 5. iPhone：*设置 → 隐私与安全性 → 开发者模式* 打开（重启一次）；*设置 → 通用 → VPN 与设备管理* → 信任你的 Apple ID
-6. 桌面上出现 SiteScan
+6. 桌面上出现 Spacan
 
 免费 Apple ID 签的包 **7 天失效**，到期重新拖一次 Sideloadly 即可（扫描数据在沙盒里不会丢）；Sideloadly 有 Wi-Fi 自动续签选项。免费账号最多同时装 3 个这样的 App。换成付费开发者账号后，同样的 IPA 签出来 1 年有效。
 
@@ -61,16 +61,16 @@ TestFlight 内测分发需要付费开发者账号；有账号后，GitHub Actio
 
 ```bash
 brew install xcodegen
-cd SiteScan
+cd Spacan
 xcodegen generate
-open SiteScan.xcodeproj
+open Spacan.xcodeproj
 ```
 
 ### 方式 B — 手动
 
-1. Xcode → File → New → Project → iOS App，Product Name `SiteScan`，Interface SwiftUI，Language Swift
-2. 删掉模板里的 `ContentView.swift` 和 `SiteScanApp.swift`
-3. 把本仓库 `SiteScan/SiteScan/` 下的 `App`、`AR`、`Export`、`Models`、`Support`、`Views` 六个文件夹拖进工程（勾选 *Copy items if needed* 和 *Create groups*）
+1. Xcode → File → New → Project → iOS App，Product Name `Spacan`，Interface SwiftUI，Language Swift
+2. 删掉模板里的 `ContentView.swift` 和 `SpacanApp.swift`
+3. 把本仓库 `Spacan/Spacan/` 下的 `App`、`AR`、`Export`、`Models`、`Support`、`Views` 六个文件夹拖进工程（勾选 *Copy items if needed* 和 *Create groups*）
 4. Target → Info 里加 `NSCameraUsageDescription`、`UIFileSharingEnabled = YES`、`LSSupportsOpeningDocumentsInPlace = YES`；Deployment Target 设为 iOS 17.0
 
 ### 签名并装到手机
@@ -93,14 +93,14 @@ TEAM_ID=你的10位TeamID ./install_to_iphone.sh
 ### TestFlight 内测（需要付费开发者账号）
 
 1. [developer.apple.com](https://developer.apple.com/programs/enroll/) 加入 Developer Program（个人即可，审核约 1–2 天）
-2. [App Store Connect](https://appstoreconnect.apple.com) → My Apps → + → New App，Bundle ID 选 `com.triphorium.sitescan`（先在 Certificates, Identifiers & Profiles 里注册这个 ID）
+2. [App Store Connect](https://appstoreconnect.apple.com) → My Apps → + → New App，Bundle ID 选 `com.triphorium.spacan`（先在 Certificates, Identifiers & Profiles 里注册这个 ID）
 3. Xcode → Product → Archive → Distribute App → **TestFlight Internal Only** → Upload。几分钟后在 App Store Connect 的 TestFlight 页出现
 4. TestFlight → Internal Testing → 建一个组，加自己和同事的 Apple ID（最多 100 人，不用审核）
 5. 手机装 TestFlight App，接受邀请即可安装；每个 build 有效 90 天
 
 之后每次改代码只重复第 3 步。想全自动的话 Xcode → Product → Xcode Cloud → Create Workflow，每次 push 自动打包上传 TestFlight，免费额度每月 25 小时。
 
-> 如果 Mac 上装了 Claude Code，直接在 `SiteScan/` 目录里说"生成 Xcode 工程并 build 到我的 iPhone"也行。
+> 如果 Mac 上装了 Claude Code，直接在 `Spacan/` 目录里说"生成 Xcode 工程并 build 到我的 iPhone"也行。
 > 这套代码是在没有 Xcode 的环境里写的，没有编译验证过；第一次 build 如果有少量报错，把报错贴回来即可。
 
 ## 3. 怎么扫
@@ -128,8 +128,8 @@ TEAM_ID=你的10位TeamID ./install_to_iphone.sh
 
 三种方式任选：
 - App 内 → 扫描详情 → **打包为 ZIP** → AirDrop / 存到 iCloud
-- 手机 **文件** App → 我的 iPhone → SiteScan → `Scans/` 文件夹
-- 连 Mac → 访达 → 设备 → 文件 → SiteScan，直接拖文件夹
+- 手机 **文件** App → 我的 iPhone → Spacan → `Scans/` 文件夹
+- 连 Mac → 访达 → 设备 → 文件 → Spacan，直接拖文件夹
 
 目录结构：
 
@@ -181,8 +181,8 @@ python gaussian-splatting/train.py -s /path/to/Scan_colmap
 ## 代码结构
 
 ```
-SiteScan/
-├── App/SiteScanApp.swift                 入口
+Spacan/
+├── App/SpacanApp.swift                 入口
 ├── AR/ScanSessionController.swift        AR 会话、录制状态机、导出调度
 ├── AR/PointCloudBuilder.swift            深度图 → 世界坐标彩色点云（体素去重）
 ├── AR/KeyframeRecorder.swift             关键帧 JPEG + 位姿 + 原始深度

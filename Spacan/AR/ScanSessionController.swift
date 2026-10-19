@@ -54,7 +54,7 @@ final class ScanSessionController: NSObject, ObservableObject, ARSessionDelegate
 
     // MARK: Private capture state (session queue only)
 
-    private let queue = DispatchQueue(label: "com.triphorium.sitescan.session", qos: .userInitiated)
+    private let queue = DispatchQueue(label: "com.triphorium.spacan.session", qos: .userInitiated)
     private var active = Settings()
     private var recording = false
     private var meshAnchors: [UUID: ARMeshAnchor] = [:]

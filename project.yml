@@ -1,6 +1,6 @@
-# XcodeGen spec — run `xcodegen generate` in this folder to produce SiteScan.xcodeproj
+# XcodeGen spec — run `xcodegen generate` in this folder to produce Spacan.xcodeproj
 # (brew install xcodegen). See README.md for the manual alternative.
-name: SiteScan
+name: Spacan
 options:
   bundleIdPrefix: com.triphorium
   deploymentTarget:
@@ -8,18 +8,18 @@ options:
   createIntermediateGroups: true
 
 targets:
-  SiteScan:
+  Spacan:
     type: application
     platform: iOS
     sources:
-      - path: SiteScan
+      - path: Spacan
     info:
-      path: SiteScan/Info.plist
+      path: Spacan/Info.plist
       properties:
-        CFBundleDisplayName: SiteScan
+        CFBundleDisplayName: Spacan
         CFBundleShortVersionString: "0.1.0"
         CFBundleVersion: "1"
-        NSCameraUsageDescription: SiteScan 需要使用相机和 LiDAR 进行三维扫描。
+        NSCameraUsageDescription: Spacan 需要使用相机和 LiDAR 进行三维扫描。
         UIRequiredDeviceCapabilities: [arkit, arm64]
         UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
         UIRequiresFullScreen: true
@@ -30,7 +30,7 @@ targets:
           UIApplicationSupportsMultipleScenes: false
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.triphorium.sitescan
+        PRODUCT_BUNDLE_IDENTIFIER: com.triphorium.spacan
         SWIFT_VERSION: "5.0"
         TARGETED_DEVICE_FAMILY: "1,2"
         CODE_SIGN_STYLE: Automatic

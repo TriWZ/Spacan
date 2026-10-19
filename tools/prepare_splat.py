@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Convert a SiteScan bundle into a COLMAP text sparse model so it can be trained with
+Convert a Spacan bundle into a COLMAP text sparse model so it can be trained with
 gsplat / graphdeco Gaussian Splatting (or anything else that reads COLMAP), using the
 LiDAR point cloud as the initial Gaussians instead of running SfM.
 
@@ -32,7 +32,7 @@ import numpy as np
 # ----------------------------------------------------------------------------- PLY
 
 def read_ply(path):
-    """Reads the binary little-endian PLY written by SiteScan (xyz float32, rgb uint8)."""
+    """Reads the binary little-endian PLY written by Spacan (xyz float32, rgb uint8)."""
     with open(path, "rb") as f:
         header = b""
         while not header.endswith(b"end_header\n"):
@@ -120,7 +120,7 @@ def write_png16(path, arr_u16):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("scan", help="SiteScan bundle folder (contains transforms.json)")
+    ap.add_argument("scan", help="Spacan bundle folder (contains transforms.json)")
     ap.add_argument("--out", help="output folder (default: <scan>_colmap)")
     ap.add_argument("--max-points", type=int, default=600_000,
                     help="subsample the LiDAR cloud to at most this many seed points (default 600k)")
@@ -204,7 +204,7 @@ def main():
 
     # ---- optional depth PNGs (mm)
     if args.depth_png:
-        meta = tj.get("sitescan", {})
+        meta = tj.get("spacan", {})
         dw, dh = int(meta.get("depth_width", 0)), int(meta.get("depth_height", 0))
         if dw and dh:
             os.makedirs(os.path.join(out, "depth_png"), exist_ok=True)

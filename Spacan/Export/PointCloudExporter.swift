@@ -10,7 +10,7 @@ enum PointCloudExporter {
         let header = """
         ply
         format binary_little_endian 1.0
-        comment SiteScan LiDAR point cloud — meters, ARKit world frame (+Y up)
+        comment Spacan LiDAR point cloud — meters, ARKit world frame (+Y up)
         element vertex \(points.count)
         property float x
         property float y

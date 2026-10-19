@@ -81,7 +81,7 @@ enum ScanBundleWriter {
             "k1": 0, "k2": 0, "p1": 0, "p2": 0,
             "ply_file_path": "cloud.ply",
             "applied_transform": [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0]],
-            "sitescan": [
+            "spacan": [
                 "convention": "camera_to_world, OpenGL (x right, y up, z backward)",
                 "units": "meters",
                 "depth_raw_format": "float32 little-endian row-major, meters, 0 = invalid",

@@ -1,5 +1,5 @@
 #!/bin/bash
-# One-shot installer: generate the Xcode project, build SiteScan, and push it to the
+# One-shot installer: generate the Xcode project, build Spacan, and push it to the
 # iPhone connected to this Mac (USB or Wi-Fi). Works with a free Apple ID (Personal Team,
 # app expires after 7 days — just re-run) or a paid Developer Program team (1 year).
 #
@@ -12,8 +12,8 @@ set -euo pipefail
 cd "$(dirname "$0")"
 
 TEAM_ID="${TEAM_ID:-}"
-BUNDLE_ID="${BUNDLE_ID:-com.triphorium.sitescan}"
-SCHEME="SiteScan"
+BUNDLE_ID="${BUNDLE_ID:-com.triphorium.spacan}"
+SCHEME="Spacan"
 
 if ! xcode-select -p >/dev/null 2>&1 || ! command -v xcodebuild >/dev/null; then
   echo "需要先从 App Store 安装 Xcode，并打开一次完成组件安装。"; exit 1
@@ -62,7 +62,7 @@ xcodebuild -project "$SCHEME.xcodeproj" -scheme "$SCHEME" -configuration Debug \
 
 APP="$(find build/Build/Products -type d -name "$SCHEME.app" -path "*iphoneos*" | head -1)"
 if [ -z "$APP" ]; then
-  echo "编译失败。常见原因：Xcode 里没登录这个 Team 的 Apple ID（Xcode → Settings → Accounts）；或 Bundle ID 被别的 Team 占用（改 BUNDLE_ID=com.yourname.sitescan 重试）。"
+  echo "编译失败。常见原因：Xcode 里没登录这个 Team 的 Apple ID（Xcode → Settings → Accounts）；或 Bundle ID 被别的 Team 占用（改 BUNDLE_ID=com.yourname.spacan 重试）。"
   exit 1
 fi
 

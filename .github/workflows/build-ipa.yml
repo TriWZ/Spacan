@@ -1,4 +1,4 @@
-# Builds an unsigned SiteScan.ipa on GitHub's macOS runners, so no Mac is needed.
+# Builds an unsigned Spacan.ipa on GitHub's macOS runners, so no Mac is needed.
 # Download the artifact from the Actions run, then sideload it from Windows with
 # Sideloadly / AltStore using your own Apple ID (see README → 没有 Mac 的做法).
 name: Build unsigned IPA
@@ -31,8 +31,8 @@ jobs:
         run: |
           set -o pipefail
           xcodebuild \
-            -project SiteScan.xcodeproj \
-            -scheme SiteScan \
+            -project Spacan.xcodeproj \
+            -scheme Spacan \
             -configuration Release \
             -sdk iphoneos \
             -destination 'generic/platform=iOS' \
@@ -50,26 +50,26 @@ jobs:
           test -n "$APP"
           rm -rf ipa && mkdir -p ipa/Payload
           cp -R "$APP" ipa/Payload/
-          (cd ipa && zip -qry ../SiteScan-unsigned.ipa Payload)
-          ls -la SiteScan-unsigned.ipa
+          (cd ipa && zip -qry ../Spacan-unsigned.ipa Payload)
+          ls -la Spacan-unsigned.ipa
 
       - name: Upload IPA
         uses: actions/upload-artifact@v4
         with:
-          name: SiteScan-unsigned-ipa
-          path: SiteScan-unsigned.ipa
+          name: Spacan-unsigned-ipa
+          path: Spacan-unsigned.ipa
           retention-days: 30
 
       # A Release gives a stable, login-free download link:
-      #   https://github.com/<owner>/<repo>/releases/latest/download/SiteScan-unsigned.ipa
+      #   https://github.com/<owner>/<repo>/releases/latest/download/Spacan-unsigned.ipa
       - name: Publish IPA as GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           TAG="build-${{ github.run_number }}"
-          gh release create "$TAG" SiteScan-unsigned.ipa \
+          gh release create "$TAG" Spacan-unsigned.ipa \
             --repo "${{ github.repository }}" \
-            --title "SiteScan build ${{ github.run_number }}" \
+            --title "Spacan build ${{ github.run_number }}" \
             --notes "Unsigned IPA built from ${{ github.sha }}. Sideload with Sideloadly / AltStore using your own Apple ID (see README)."
 
       - name: Upload build log on failure

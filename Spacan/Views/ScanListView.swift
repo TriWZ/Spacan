@@ -27,7 +27,7 @@ struct ScanListView: View {
                     }
                 }
             }
-            .navigationTitle("SiteScan")
+            .navigationTitle("Spacan")
             .navigationDestination(for: ScanMeta.self) { meta in
                 ScanDetailView(meta: meta)
             }
@@ -132,7 +132,7 @@ struct ScanDetailView: View {
                         }
                         .disabled(zipping)
                     }
-                    Text("也可以在「文件」App → 我的 iPhone → SiteScan → Scans 里直接取整个文件夹，或连 Mac 用访达拷贝。")
+                    Text("也可以在「文件」App → 我的 iPhone → Spacan → Scans 里直接取整个文件夹，或连 Mac 用访达拷贝。")
                         .font(.caption).foregroundStyle(.secondary)
                 }
                 if let zipError {

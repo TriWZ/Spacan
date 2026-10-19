@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct SiteScanApp: App {
+struct SpacanApp: App {
     var body: some Scene {
         WindowGroup {
             ScanListView()
