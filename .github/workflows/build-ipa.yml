@@ -8,6 +8,9 @@ on:
     branches: [main, master]
   workflow_dispatch:
 
+permissions:
+  contents: write   # needed to attach the IPA to a GitHub Release
+
 jobs:
   build:
     runs-on: macos-latest
@@ -56,6 +59,18 @@ jobs:
           name: SiteScan-unsigned-ipa
           path: SiteScan-unsigned.ipa
           retention-days: 30
+
+      # A Release gives a stable, login-free download link:
+      #   https://github.com/<owner>/<repo>/releases/latest/download/SiteScan-unsigned.ipa
+      - name: Publish IPA as GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="build-${{ github.run_number }}"
+          gh release create "$TAG" SiteScan-unsigned.ipa \
+            --repo "${{ github.repository }}" \
+            --title "SiteScan build ${{ github.run_number }}" \
+            --notes "Unsigned IPA built from ${{ github.sha }}. Sideload with Sideloadly / AltStore using your own Apple ID (see README)."
 
       - name: Upload build log on failure
         if: failure()
